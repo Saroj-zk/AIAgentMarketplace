@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1770118878331,
+    "name": "Claude Bot",
+    "role": "Trading Bot",
+    "price": "1",
+    "description": "this bot trades automatically on your behalf.",
+    "owner": "lonewolf",
+    "image": "/assets/agent2.png",
+    "status": "New",
+    "creator": "lonewolf",
+    "dateCreated": "2026-02-03T11:41:18.331Z"
+  },
+  {
+    "id": 1,
+    "name": "Nexus Cyber",
+    "role": "SecOps",
+    "price": "4.2",
+    "image": "/assets/agent1.png",
+    "status": "Verified",
+    "description": "Advanced security operations agent capable of real-time threat detection and automated response protocols.",
+    "owner": "0x71C...9A21",
+    "creator": "Nexus Ops"
+  },
+  {
+    "id": 2,
+    "name": "Codex Alpha",
+    "role": "Engineer",
+    "price": "1.18",
+    "image": "/assets/agent2.png",
+    "status": "Rare",
+    "description": "Full-stack development assistant specialized in React, Node.js, and Solidity smart contracts.",
+    "owner": "0x82a...b291",
+    "creator": "Alpha Labs"
+  },
+  {
+    "id": 3,
+    "name": "Muse V4",
+    "role": "Creative",
+    "price": "0.26",
+    "image": "/assets/agent3.png",
+    "status": "New",
+    "description": "Generative art and design director agent. Creates consistent brand assets and UI mockups.",
+    "owner": "0x19c...d922",
+    "creator": "Muse Collective"
+  }
+]
