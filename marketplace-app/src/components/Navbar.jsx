@@ -1,40 +1,17 @@
 import React, { useEffect } from 'react';
-import { Search, Wallet, Terminal, User, ShieldCheck, LogOut } from 'lucide-react';
+import { Terminal, LogOut } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useWallet } from '../context/WalletContext';
+import { ConnectButton } from "thirdweb/react";
+import { client } from "../client";
 import './Navbar.css';
 
 const Navbar = () => {
-    const { isConnected, account, username, connectWallet, disconnectWallet, loading } = useWallet();
+    const { isConnected, account, username, disconnectWallet, loading } = useWallet();
     const location = useLocation();
     const navigate = useNavigate();
 
-    // Redirection Logic: If connected but no username, forced to claim identity
-    useEffect(() => {
-        if (!loading && isConnected && !username && location.pathname !== '/identity') {
-            navigate('/identity');
-        }
-    }, [isConnected, username, location.pathname, navigate, loading]);
-
-    const handleConnect = async () => {
-        if (isConnected) {
-            if (window.confirm('Disconnect session?')) {
-                disconnectWallet();
-                navigate('/');
-                // Small delay to ensure state clears then reload for a clean environment
-                setTimeout(() => window.location.reload(), 100);
-            }
-        } else {
-            const success = await connectWallet();
-            if (success) {
-                // Connection is handled by useEffect for redirection
-            }
-        }
-    };
-
-    const shortenAddress = (addr) => {
-        return `${addr.slice(0, 6)}...${addr.slice(-4)}`;
-    };
+    // Identity is optional, no forced redirection
 
     return (
         <nav className="navbar">
@@ -50,41 +27,61 @@ const Navbar = () => {
                     <Link to="/sell" className={`nav-link ${location.pathname === '/sell' ? 'active' : ''}`}>Deploy</Link>
                 </div>
 
-                <div className="nav-actions" style={{ display: 'flex', gap: '12px' }}>
-                    <div
-                        className={`btn ${isConnected ? 'btn-outline' : 'btn-primary'}`}
-                        style={{ height: '42px', padding: '0 20px', fontSize: '13px', borderRadius: '12px', cursor: isConnected && username ? 'pointer' : 'default' }}
-                        onClick={() => {
-                            if (!isConnected) handleConnect();
-                            else if (username) navigate('/dashboard');
-                        }}
-                    >
-                        {isConnected ? (
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                {username ? (
-                                    <>
-                                        <div style={{ padding: '4px 8px', background: 'rgba(255,255,255,0.05)', borderRadius: '6px', fontSize: '12px', fontWeight: '800', color: '#fff' }}>
-                                            @{username}
-                                        </div>
-                                        <span style={{ color: '#444' }}>|</span>
-                                    </>
-                                ) : (
-                                    <ShieldCheck size={14} color="#ff4d4d" />
-                                )}
-                                <span style={{ opacity: 0.6 }}>{shortenAddress(account)}</span>
+                <div className="nav-actions" style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                    {isConnected && (
+                        <Link to="/dashboard" style={{ textDecoration: 'none' }}>
+                            <div style={{
+                                padding: '8px 16px',
+                                background: 'rgba(255,255,255,0.05)',
+                                borderRadius: '10px',
+                                fontSize: '13px',
+                                fontWeight: '600',
+                                color: '#fff',
+                                border: '1px solid rgba(255,255,255,0.1)',
+                                cursor: 'pointer'
+                            }}>
+                                {username ? `@${username}` : `${account.slice(0, 6)}...${account.slice(-4)}`}
                             </div>
-                        ) : (
-                            <>
-                                <Wallet size={16} style={{ marginRight: '8px' }} />
-                                Connect Wallet
-                            </>
-                        )}
-                    </div>
+                        </Link>
+                    )}
+
+                    {isConnected && !username && (
+                        <Link to="/identity" style={{
+                            fontSize: '11px',
+                            color: 'var(--primary-color)',
+                            fontWeight: '800',
+                            textTransform: 'uppercase',
+                            textDecoration: 'none',
+                            letterSpacing: '0.05em'
+                        }}>
+                            Claim Identity
+                        </Link>
+                    )}
+
+                    <ConnectButton
+                        client={client}
+                        theme={"dark"}
+                        connectButton={{
+                            label: "Connect Wallet",
+                            style: {
+                                height: '42px',
+                                borderRadius: '12px',
+                                fontSize: '13px',
+                                fontWeight: '600',
+                                background: 'var(--primary-color, #6366f1)',
+                                color: '#fff'
+                            }
+                        }}
+                        appMetadata={{
+                            name: "OpenAgent",
+                            url: "https://openagent.example.com",
+                        }}
+                    />
 
                     {isConnected && (
                         <button
                             className="btn btn-outline"
-                            onClick={handleConnect}
+                            onClick={disconnectWallet}
                             style={{
                                 width: '42px',
                                 height: '42px',

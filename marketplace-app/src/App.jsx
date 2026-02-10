@@ -22,32 +22,36 @@ const ScrollToTop = () => {
   return null;
 };
 
+import { ThirdwebProvider } from "thirdweb/react";
+
 function App() {
   return (
-    <WalletProvider>
-      <Router>
-        <ScrollToTop />
-        <div className="app-layout">
-          <Navbar />
-          <main>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/explore" element={<Explore />} />
-              <Route path="/auctions" element={<Auctions />} />
-              <Route path="/auction/:id" element={<AuctionDetails />} />
-              <Route path="/sell" element={<SellAgent />} />
-              <Route path="/admin" element={<Admin />} />
-              <Route path="/agent/:id" element={<AgentDetails />} />
-              <Route path="/identity" element={<Identity />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="*" element={<Home />} />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
-      </Router>
-    </WalletProvider>
-  )
+    <ThirdwebProvider>
+      <WalletProvider>
+        <Router>
+          <ScrollToTop />
+          <div className="app-layout">
+            <Navbar />
+            <main>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/explore" element={<Explore />} />
+                <Route path="/auctions" element={<Auctions />} />
+                <Route path="/auction/:id" element={<AuctionDetails />} />
+                <Route path="/sell" element={<SellAgent />} />
+                <Route path="/admin" element={<Admin />} />
+                <Route path="/agent/:id" element={<AgentDetails />} />
+                <Route path="/identity" element={<Identity />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="*" element={<Home />} />
+              </Routes>
+            </main>
+            <Footer />
+          </div>
+        </Router>
+      </WalletProvider>
+    </ThirdwebProvider>
+  );
 }
 
 export default App

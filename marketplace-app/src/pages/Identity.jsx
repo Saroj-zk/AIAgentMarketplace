@@ -37,7 +37,7 @@ const Identity = () => {
         setIsSubmitting(true);
         console.log("Attempting to claim identity:", cleanName);
 
-        const result = saveUsername(cleanName);
+        const result = await saveUsername(cleanName);
 
         if (result.success) {
             // The useEffect will handle navigation when 'username' state updates in context
