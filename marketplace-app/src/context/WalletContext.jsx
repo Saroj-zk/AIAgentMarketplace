@@ -75,9 +75,6 @@ export const WalletProvider = ({ children }) => {
     }, [account]);
 
     const connectWallet = async () => {
-        // In Thirdweb v5, connection is typically managed via ConnectButton.
-        // If we want a programmatic way, we can use useConnect hook.
-        // For simplicity, we'll let the Navbar handle the ConnectButton.
         return true;
     };
 
@@ -96,7 +93,6 @@ export const WalletProvider = ({ children }) => {
         }
 
         try {
-            // 1. Claim on-chain first
             const transaction = prepareContractCall({
                 contract,
                 method: "claimIdentity",
@@ -108,7 +104,6 @@ export const WalletProvider = ({ children }) => {
                 account: activeAccount,
             });
 
-            // 2. Sync with backend
             const response = await fetch('http://localhost:3001/api/users', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -230,11 +225,8 @@ export const WalletProvider = ({ children }) => {
                 account: activeAccount,
             });
 
-            // Extract ID from events (this might need adjustment depending on Thirdweb's receipt structure)
-            // Simplified for now, or use a fallback
             let onChainId = Date.now();
 
-            // 2. Sync with backend registry
             const formData = new FormData();
             formData.append('id', onChainId.toString());
             formData.append('name', agentData.name);
@@ -283,7 +275,7 @@ export const WalletProvider = ({ children }) => {
             buyAgent,
             placeBid,
             loading,
-            activeAccount, // Exporting for direct use if needed
+            activeAccount,
             client,
         }}>
             {children}

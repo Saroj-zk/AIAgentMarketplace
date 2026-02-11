@@ -23,6 +23,8 @@ const ScrollToTop = () => {
   return null;
 };
 
+import { ThirdwebProvider } from "thirdweb/react";
+
 function App() {
   return (
     <ThirdwebProvider>
