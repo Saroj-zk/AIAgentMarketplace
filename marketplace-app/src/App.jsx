@@ -8,11 +8,12 @@ import AgentDetails from './pages/AgentDetails';
 import AuctionDetails from './pages/AuctionDetails';
 import Identity from './pages/Identity';
 import Admin from './pages/Admin';
-import Dashboard from './pages/Dashboard'; // Added import for Dashboard
+import Dashboard from './pages/Dashboard';
 import Footer from './components/Footer';
 import { WalletProvider } from './context/WalletContext';
 import { useEffect } from 'react';
-import './App.css'
+import { ThirdwebProvider } from "thirdweb/react";
+import './App.css';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -54,4 +55,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
